@@ -20,6 +20,8 @@ class VSMenuItem : public wxMenuItem
 
       size_t   m_nHeight,
                m_nMinHeight;
+	  wxString m_strName;
+	  wxString m_strAccel;
 };
 
 #endif // TORSION_VSMENUITEM_H

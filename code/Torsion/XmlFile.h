@@ -5,15 +5,71 @@
 #ifndef TORSION_XMLFILE_H
 #define TORSION_XMLFILE_H
 #pragma once
+#include "tinyxml2.h"
+#include <wx/colour.h>// for wxColour
+#include <wx/position.h>// for wxPoint
+#include <wx/msw/private.h> // for MAX_PATH
 
-#include "MarkupSTL.h"
-
-
-class XmlFile : public CMarkupSTL
+class XmlFile// : public CMarkup
 {
 public:
    XmlFile();
    XmlFile( const wxChar* buffer );
+
+   wxString GetError()
+   {
+	   return wxString("This is not defined yet!");
+   }
+   wxString GetDoc()
+   {
+	   return wxString();
+   }
+   bool SetDoc(const wxString& name)
+   {
+	   return true;
+   }
+   wxString GetAttrib(const wxString& name)
+   {
+	   return wxString();
+   }
+   void AddAttrib(const wxString& name, const wxString& value)
+   {
+	   int z = 0;
+   }
+   wxString GetData()
+   {
+	   return wxString();
+   }
+   bool IntoElem()
+   {
+	   return true;
+   };
+   bool OutOfElem()
+   {
+	   return true;
+   };
+   void ResetMainPos()
+   {
+	   int z = 0;
+   }
+   bool FindElem(const wxString& name)
+   {
+	   tinyxml2::XMLElement *e = xmlDoc_.FirstChildElement(name);
+	   if (e) return true;
+	   else return false;
+   }
+   void AddElem(const wxString& name, const wxString& value)
+   {
+	   int z = 0;
+	   //tinyxml2::xml_attribute a = xmlDoc_.document_element().append_attribute( name );
+	   //a.set_value( value );
+   }
+
+   void AddElem(const wxString& name)
+   {
+	   int z = 0;
+	   //tinyxml2::xml_attribute a = xmlDoc_.document_element().append_attribute( name );
+   }
 
    wxString GetStringElem( const wxString& name, const wxString& value );
 
@@ -44,6 +100,8 @@ public:
    int GetArrayStringElems( wxArrayString& output, const wxString& name, const wxString& elemName );
    void AddArrayStringElems( const wxString& name, const wxString& elemName, const wxArrayString& strings );
 
+   tinyxml2::XMLDocument xmlDoc_;
+
 protected:
 
    static wxChar s_Temp[MAX_PATH];
@@ -52,12 +110,12 @@ protected:
 
 inline bool XmlFile::StringToBool( const wxChar* boolean )
 {
-   return stricmp( boolean, "true" ) == 0 || atoi( boolean );
+	return true;// stricmp(boolean, "true") == 0 || atoi(boolean);
 }
 
 inline int XmlFile::StringToInt( const wxChar* integer )
 {
-   return atoi( integer );
+	return 0;// atoi(integer);
 }
 
 inline wxString XmlFile::BoolToString( bool value )
@@ -67,7 +125,8 @@ inline wxString XmlFile::BoolToString( bool value )
 
 inline wxString XmlFile::IntToString( int value )
 {
-   return itoa( value, s_Temp, 10 ); 
+	wxString z;z << value;
+	return z;// itoa(value, s_Temp, 10);
 }
 
 #endif // TORSION_XMLFILE_H

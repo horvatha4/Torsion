@@ -16,8 +16,7 @@
 #endif 
 
 const wxChar* AppPrefs::s_ReservedWords = 
-   "break case continue datablock package default else false function if for new or package return " \
-   "switch switch$ true %this while singleton local";
+   L"break case continue datablock package default else false function if for new or package return switch switch$ true %this while singleton local";
 
 IMPLEMENT_CLASS(tsPrefsUpdateHint, wxObject)
 
@@ -52,12 +51,12 @@ bool AppPrefs::Load( const wxString& Path )
 	if ( !File.Open( Path, wxFile::read ) ) {
 
       // This loads defaults.
-      LoadFromString( "" );
+      LoadFromString( L"" );
 		return false;
 	}
 
 	size_t Length = File.Length();
-    char* Buffer = new char[ Length+1 ];
+	wxChar* Buffer = new wxChar[ Length+1 ];
 	File.Read( Buffer, Length );
 	Buffer[ Length ] = 0;
    LoadFromString( Buffer );
@@ -118,7 +117,7 @@ void AppPrefs::LoadFromString( const wxChar* Buffer )
    Xml.FindElem( "Position" );
 	m_Position = StringToRect( Xml.GetData().c_str() );
    {
-      if ( !desktop.Inside( m_Position.GetTopLeft() ) )
+      if ( !desktop.Contains( m_Position.GetTopLeft() ) )
          m_Position.SetTopLeft( wxPoint( 0, 0 ) );
       if ( m_Position.GetWidth() > desktop.GetWidth() )
          m_Position.SetWidth( desktop.GetWidth() );
@@ -153,7 +152,7 @@ void AppPrefs::LoadFromString( const wxChar* Buffer )
    m_FindSearchUp = Xml.GetBoolElem( "FindSearchUp", false );
    
    m_FindPos = Xml.GetPointElem( "FindPos", wxDefaultPosition );
-   if ( !desktop.Inside( m_FindPos ) )
+   if ( !desktop.Contains( m_FindPos ) )
       m_FindPos = wxDefaultPosition;
 
    m_FindSymbols.Empty();

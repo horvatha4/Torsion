@@ -6,7 +6,7 @@
 #define TORSION_SHNOTEBOOK_H
 #pragma once
 
-
+#include <wx/notebook.h>
 #define shNB_NOBUTTONS        0x1
 
 enum

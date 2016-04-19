@@ -124,10 +124,11 @@ bool ScriptScanner::Open( const wxString& path )
    size_t len = (size_t)file.Length();
    if ( len > 0 )
    {
-      wxChar* buff = m_Memory.GetWriteBuf(len);
-      if ( file.Read(buff, len) != len )
+      //wxChar* buff = m_Memory.GetWriteBuf(len);
+      //if ( file.Read(buff, len) != len )
+      if ( file.Read(wxStringBuffer(m_Memory, len), len) != len )
          return false;
-      m_Memory.UngetWriteBuf(len);
+      //m_Memory.UngetWriteBuf(len);
    }
 
    m_Line = 0;

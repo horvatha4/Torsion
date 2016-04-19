@@ -17,7 +17,7 @@ class AutoCompData
    friend class AutoCompThread;
    friend class AutoCompManager;
 
-protected:
+public://protected:
 
    AutoCompData();
    ~AutoCompData();

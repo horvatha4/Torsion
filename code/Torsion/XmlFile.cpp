@@ -16,22 +16,27 @@ wxChar XmlFile::s_Temp[MAX_PATH];
 
 
 XmlFile::XmlFile() :
-   CMarkupSTL()
+	xmlDoc_()
 {
 }
 
 XmlFile::XmlFile( const wxChar* buffer ) :
-   CMarkupSTL( buffer )
+	xmlDoc_()
 {
+	//xmlDoc_.LoadFile(buffer.);
 }
 
 wxString XmlFile::GetStringElem( const wxString& name, const wxString& value )
 {
    wxString result = value;
-   if ( FindElem( name.c_str() ) ) {
-      result = GetData().c_str();
-   }
-	ResetMainPos();
+   //tinyxml2::xml_node n = xmlDoc_.find_child_by_attribute(name, value);
+   //if (FindElem( name.c_str() ) )
+ //  if (n)
+ //  {
+	//  //result = GetData().c_str();
+	//   result = n.text().as_string();
+	//}
+	//ResetMainPos();
    return result;
 }
 
@@ -68,13 +73,18 @@ void XmlFile::AddIntElem( const wxString& name, int value )
 int XmlFile::GetIntAttrib( const wxString& element, const wxString& attrib, int value )
 {
    int result = value;
-   if ( FindElem( element.c_str() ) ) {
-      wxString value( GetAttrib( attrib.c_str() ).c_str() );
-      if ( !value.IsEmpty() ) {
-         result = StringToInt( value );
-      }
-   }
-	ResetMainPos();
+ //  if ( FindElem( element.c_str() ) ) {
+ //     wxString value( GetAttrib( attrib.c_str() ).c_str() );
+ //     if ( !value.IsEmpty() ) {
+ //        result = StringToInt( value );
+ //     }
+ //  }
+	//ResetMainPos();
+   //tinyxml2::xml_node n = xmlDoc_.find_child(element);
+   //if (n)
+   //{
+	  // result = n.attribute(attrib).as_int();
+   //}
    return result;
 }
 
@@ -91,13 +101,22 @@ void XmlFile::AddColorElem( const wxString& name, const wxColour& value )
 wxColour XmlFile::GetColorAttrib( const wxString& element, const wxString& attrib, const wxColour& color )
 {
    wxColour result( color );
-   if ( FindElem( element.c_str() ) ) {
-      wxString value( GetAttrib( attrib.c_str() ).c_str() );
-      if ( !value.IsEmpty() ) {
-         result = StringToColor( value );
-      }
-   }
-	ResetMainPos();
+ //  if ( FindElem( element.c_str() ) ) {
+ //     wxString value( GetAttrib( attrib.c_str() ).c_str() );
+ //     if ( !value.IsEmpty() ) {
+ //        result = StringToColor( value );
+ //     }
+ //  }
+	//ResetMainPos();
+  // tinyxml2::xml_node n = xmlDoc_.find_child(element);
+  // if (n)
+  // {
+		//wxString value( n.attribute(attrib).as_string() );
+		//if ( !value.IsEmpty() ) {
+		//	result = StringToColor( value );
+		//}
+	 //  result = StringToColor(value);
+  // }
    return result;
 }
 
@@ -165,18 +184,32 @@ wxString XmlFile::PointToString( const wxPoint& value )
 int XmlFile::GetArrayStringElems( wxArrayString& output, const wxString& name, const wxString& elemName )
 {
    int count = -1;
-   if ( FindElem( name ) && IntoElem() ) {
+   //tinyxml2::xml_node n = xmlDoc_.find_child(name);
 
+   //if ( FindElem( name ) && IntoElem() ) {
+   //if ( n )
+   //{
       count = 0;
-      while ( FindElem( elemName ) ) {
-         output.Add( GetData().c_str() );
-         ++count;
-      }
+      //while ( FindElem( elemName ) ) {
+	  //for (tinyxml2::xml_node_iterator it = n.begin(); it != n.end(); ++it)
+	  //{
+		 // //std::cout << "Tool:";
 
-      OutOfElem();
-   	ResetMainPos();
-   }
-	ResetMainPos();
+		 // for (tinyxml2::xml_attribute_iterator ait = it->attributes_begin(); ait != it->attributes_end(); ++ait)
+		 // {
+			//  //std::cout << " " << ait->name() << "=" << ait->value();
+			// //output.Add( GetData().c_str() );
+			// output.Add( ait->value() );
+			// ++count;
+		 // }
+
+		 // //std::cout << std::endl;
+	  //}
+
+      //OutOfElem();
+   	//ResetMainPos();
+   //}
+	//ResetMainPos();
 
    return count;
 }
@@ -184,10 +217,10 @@ int XmlFile::GetArrayStringElems( wxArrayString& output, const wxString& name, c
 void XmlFile::AddArrayStringElems( const wxString& name, const wxString& elemName, const wxArrayString& strings )
 {
 	AddElem( name );
-	IntoElem();
+	//IntoElem();
    for ( size_t i=0; i < strings.GetCount(); i++ ) {
       AddElem( elemName, strings[i] );
    }
-   OutOfElem();
+   //OutOfElem();
 }
 

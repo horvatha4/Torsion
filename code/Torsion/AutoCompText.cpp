@@ -66,9 +66,9 @@ void AutoCompText::InsertRange( size_t pos, const wxString& text )
 
 wxChar* AutoCompText::GetWriteBuf( size_t len ) 
 {
-   wxChar* result = m_Data.GetWriteBuf( len + 1 ); // never allow zero!
-   m_Data.UngetWriteBuf( len );
-
+   //wxChar* result = m_Data.GetWriteBuf( len + 1 ); // never allow zero!
+   //m_Data.UngetWriteBuf( len );
+   wxChar* result = wxStringBuffer(m_Data, len + 1);
    wxCriticalSectionLocker lock( m_SignalLock );
    m_Signaled = true;
 

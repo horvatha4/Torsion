@@ -53,12 +53,13 @@ bool AutoCompData::HasData() const
 
 void AutoCompData::Clear()
 {
-   m_Classes.Empty();
-   m_Functions.Empty();
-   m_Objects.Empty();
-   m_Vars.Empty();
+	m_Classes.Empty();
+	m_Functions.Empty();
+	m_Objects.Empty();
+	m_Vars.Empty();
 
-   wxDELETE( m_Exports );
+   //wxDELETE(m_Exports);
+   if (m_Exports){ delete m_Exports; m_Exports = NULL;}
    WX_CLEAR_ARRAY( m_Namespaces );
    WX_CLEAR_ARRAY( m_Files );
 }

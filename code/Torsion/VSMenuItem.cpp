@@ -49,15 +49,17 @@ bool VSMenuItem::OnMeasureItem( size_t *pwidth, size_t *pheight )
       wxString strMenuText = m_strName.BeforeFirst('\t');
       wxString str = wxStripMenuCodes(strMenuText);
 
-      dc.SetFont(GetFontToUse());
-      dc.GetTextExtent(str, (long *)pwidth, (long *)pheight);
+	  wxFont font;
+	  GetFontToUse(font);
+      dc.SetFont(font);
+      dc.GetTextExtent(str, (wxCoord *)pwidth, (wxCoord *)pheight);
       dc.SetFont( wxNullFont );
 
       // If we have an accelerator then measure 
       // it seperately.
       if ( !m_strAccel.empty() )
       {
-         long w, h;
+		 wxCoord w, h;
          dc.GetTextExtent( m_strAccel, &w, &h );
 
          if ( *pheight < h )
@@ -218,7 +220,7 @@ bool VSMenuItem::OnDrawItem( wxDC& dc, const wxRect& rc, wxODAction act, wxODSta
       int nPrevMode = SetBkMode(hdc, TRANSPARENT);
 
       // Set the font.
-      const wxFont& fontToUse = GetFontToUse();
+	  wxFont fontToUse; GetFontToUse(fontToUse);
       SelectInHDC selFont(hdc, GetHfontOf(fontToUse));
 
       wxString strMenuText = m_strName.BeforeFirst('\t');

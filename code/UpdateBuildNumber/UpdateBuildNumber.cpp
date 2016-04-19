@@ -2,9 +2,15 @@
 //
 
 #include "stdafx.h"
+#define wxSUFFIX u
+#define wxUSE_TEXTBUFFER 1
+#define wxUSE_TEXTFILE 1
+#define wxUSE_FILE 1
+#define wxUSE_DATETIME 1
+
+#include <wx/string.h>
 #include <wx/textfile.h>
 #include <wx/datetime.h>
-
 
 int UpdateHeader( const wxString& path, wxString* buildVer )
 {
@@ -61,7 +67,7 @@ int UpdateHeader( const wxString& path, wxString* buildVer )
    int newBuild = 0;
    {
       wxDateTime today( wxDateTime::GetTimeNow() );
-      wxDateTime start( start );
+	  wxDateTime start( start );
       wxTimeSpan span = today.Subtract( start );
       newBuild = span.GetDays();
    }

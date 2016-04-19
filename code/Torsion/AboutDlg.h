@@ -14,6 +14,13 @@
  */
 
 ////@begin includes
+#define wxUSE_GUI 1
+#include "wx/wx.h"
+#include <wx/dialog.h>
+#include <wx/windowid.h>
+#define wxUSE_STATTEXT 1
+#include <wx/stattext.h>
+
 ////@end includes
 
 /*!

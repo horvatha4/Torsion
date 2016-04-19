@@ -123,7 +123,7 @@ void FindReplaceDlg::CreateControls()
    itemBoxSizer3->Add(itemBoxSizer4, 0, wxALIGN_LEFT|wxTOP|wxBOTTOM, 2);
 
    wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, _("Fi&nd what:"), wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT );
-   itemBoxSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxADJUST_MINSIZE, 7);
+   itemBoxSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 7);//|wxADJUST_MINSIZE
 
    itemBoxSizer4->Add(0, 5, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 14);
 
@@ -135,7 +135,7 @@ void FindReplaceDlg::CreateControls()
    itemBoxSizer3->Add(m_WithSizer, 0, wxALIGN_LEFT, 0);
 
    wxStaticText* itemStaticText9 = new wxStaticText( itemDialog1, wxID_STATIC, _("Re&place with:"), wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT );
-   m_WithSizer->Add(itemStaticText9, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxADJUST_MINSIZE, 7);
+   m_WithSizer->Add(itemStaticText9, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 7);//|wxADJUST_MINSIZE
 
    wxString* m_WithCtrlStrings = NULL;
    m_WithCtrl = new wxComboBox( itemDialog1, wxID_ANY, _T(""), wxDefaultPosition, wxSize(210, -1), 0, m_WithCtrlStrings, wxCB_DROPDOWN );
@@ -260,7 +260,7 @@ void FindReplaceDlg::OnFindClick( wxCommandEvent& event )
                      ( m_WholeWordCtrl->GetValue() ? wxFR_WHOLEWORD : 0 ) );
 
    wxASSERT( GetParent() );
-   GetParent()->ProcessEvent( fevent );
+   wxDialog::ProcessEvent( fevent );
 }
 
 /*!
@@ -323,7 +323,7 @@ void FindReplaceDlg::OnReplaceClick( wxCommandEvent& event )
                      ( m_WholeWordCtrl->GetValue() ? wxFR_WHOLEWORD : 0 ) );
 
    wxASSERT( GetParent() );
-   GetParent()->ProcessEvent( fevent );
+   wxDialog::ProcessEvent( fevent );
 }
 
 
@@ -344,7 +344,7 @@ void FindReplaceDlg::OnReplaceAllClick( wxCommandEvent& event )
                      ( m_WholeWordCtrl->GetValue() ? wxFR_WHOLEWORD : 0 ) );
 
    wxASSERT( GetParent() );
-   GetParent()->ProcessEvent( fevent );
+   wxDialog::ProcessEvent( fevent );
 }
 
 
@@ -357,7 +357,7 @@ void FindReplaceDlg::OnCloseClick( wxCommandEvent& event )
    // Let the frame deal with closing us!
    wxFindDialogEvent fevent( wxEVT_COMMAND_FIND_CLOSE );
    wxASSERT( GetParent() );
-   GetParent()->AddPendingEvent( fevent );
+   wxDialog::AddPendingEvent( fevent );
 }
 
 
@@ -372,5 +372,5 @@ void FindReplaceDlg::OnCloseWindow( wxCloseEvent& event )
    // Let the frame deal with closing us!
    wxFindDialogEvent fevent( wxEVT_COMMAND_FIND_CLOSE );
    wxASSERT( GetParent() );
-   GetParent()->AddPendingEvent( fevent );
+   wxDialog::AddPendingEvent( fevent );
 }

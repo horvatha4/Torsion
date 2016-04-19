@@ -106,7 +106,9 @@ int DirWatcherWinNT::GetSignaled( wxArrayString* signaled )
    // We got some results... process them.
    int signals = 0;
    wxChar* curr = m_Buffer;
-   wxChar file[MAX_PATH];
+   //wxChar file[MAX_PATH];
+   wxString file;
+   LPSTR lpstr = file.char_str();
    wxFileName fixup;
    wxString dir;
    for ( ; bytes != 0; )
@@ -117,7 +119,7 @@ int DirWatcherWinNT::GetSignaled( wxArrayString* signaled )
       const size_t chars = fni->FileNameLength / sizeof( WCHAR );
       WideCharToMultiByte( CP_ACP, WC_NO_BEST_FIT_CHARS, 
          fni->FileName, chars, 
-         file, MAX_PATH, NULL, NULL );
+		  lpstr, MAX_PATH, NULL, NULL );
       file[ chars ] = 0;
 
       // Look to see if this is an excluded file/folder.

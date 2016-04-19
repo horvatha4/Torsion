@@ -6,6 +6,8 @@
 #define TORSION_SCRIPTFRAME_H
 #pragma once
 
+#define wxUSE_MDI 1
+#define wxUSE_DOC_VIEW_ARCHITECTURE 1
 #include <wx/docmdi.h>
 
 class ScriptCtrl;

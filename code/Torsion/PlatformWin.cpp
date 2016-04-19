@@ -9,7 +9,7 @@
 #include <wx/msw/private.h>
 
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+//#include <windows.h>
 #include <winternl.h>
 
 
@@ -131,7 +131,7 @@ void NullDelimitedBuffer( const wxArrayString& strings, wxMemoryBuffer* result )
       else 
          fixed = file.GetFullPath();
 
-      result->AppendData( (void*)fixed.c_str(), fixed.Len() + 1 );
+      result->AppendData( fixed, fixed.Len() + 1 );//
    }
 
    // We should have a double null terminator now.
@@ -146,9 +146,9 @@ bool tsSendToRecycleBin( const wxArrayString& source, bool noConfirm )
    SHFILEOPSTRUCT fileop; 
    ZeroMemory( &fileop, sizeof(fileop) ); 
    fileop.wFunc    = FO_DELETE; 
-   fileop.pFrom    = (LPCSTR)del.GetData(); 
+   fileop.pFrom    = (PCUZZWSTR)del.GetData(); //(LPCSTR)
    fileop.fFlags   = FOF_SILENT | FOF_ALLOWUNDO | ( noConfirm ? FOF_NOCONFIRMATION : 0 ) | 0x2000 /* FOF_NO_CONNECTED_ELEMENTS */;
-   return SHFileOperationA( &fileop ) == 0 && fileop.fAnyOperationsAborted == false;
+   return SHFileOperation( &fileop ) == 0 && fileop.fAnyOperationsAborted == false;
 }
 
 bool tsMoveFiles( const wxArrayString& source, const wxString& destFolder )
@@ -164,8 +164,8 @@ bool tsMoveFiles( const wxArrayString& source, const wxString& destFolder )
    SHFILEOPSTRUCT fileop; 
    ZeroMemory( &fileop, sizeof(fileop) ); 
    fileop.wFunc    = FO_MOVE; 
-   fileop.pFrom    = (LPCSTR)from.GetData(); ; 
-   fileop.pTo      = (LPCSTR)to.GetData(); ; 
+   fileop.pFrom    = (PCUZZWSTR)from.GetData(); ;
+   fileop.pTo      = (PCUZZWSTR)to.GetData(); ;
    fileop.fFlags   = FOF_SILENT | FOF_ALLOWUNDO | 0x2000 /* FOF_NO_CONNECTED_ELEMENTS */;
 
    return SHFileOperation( &fileop ) == 0;
@@ -184,8 +184,8 @@ bool tsCopyFiles( const wxArrayString& source, const wxString& destFolder )
    SHFILEOPSTRUCT fileop; 
    ZeroMemory( &fileop, sizeof(fileop) ); 
    fileop.wFunc    = FO_COPY; 
-   fileop.pFrom    = (LPCSTR)from.GetData(); ; 
-   fileop.pTo      = (LPCSTR)to.GetData(); ; 
+   fileop.pFrom    = (PCUZZWSTR)from.GetData(); ;
+   fileop.pTo      = (PCUZZWSTR)to.GetData(); ;
    fileop.fFlags   = FOF_SILENT | FOF_ALLOWUNDO | 0x2000 /* FOF_NO_CONNECTED_ELEMENTS */;
 
    return SHFileOperation( &fileop ) == 0;
@@ -235,13 +235,15 @@ BOOL CALLBACK PidHasNonConsoleWindow( HWND hwnd, LPARAM lParam )
 	DWORD windowPid;
 	::GetWindowThreadProcessId( hwnd, &windowPid );
 
-   char name[MAX_PATH];
+   wxChar name[MAX_PATH];
    GetClassName( hwnd, name, MAX_PATH );
 	if ( pid == windowPid && IsWindowVisible( hwnd ) ) {
 
       // These are the console class names for NT and 9x.
-      if (  strcmp( name, "ConsoleWindowClass" ) != 0 &&
-            strcmp( name, "tty" ) != 0 )
+      //if (  strcmp( name, "ConsoleWindowClass" ) != 0 &&
+      //      strcmp( name, "tty" ) != 0 )
+      if (  wxString( "ConsoleWindowClass" ) != wxString(name) &&
+		    wxString("tty") != wxString(name) )
       {
          return FALSE;
       }
